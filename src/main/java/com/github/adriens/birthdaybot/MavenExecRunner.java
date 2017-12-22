@@ -26,10 +26,12 @@ public class MavenExecRunner {
         String csvFileName;
         String giphyApiKey;
         String slackWebHookUrl;
+        String wishesFileName;
         
         // getting csv filename
         logger.info("Getting csvFilename from property <csvFileName> ...");
         csvFileName = System.getProperty("csvFileName", "data/birthdays.csv");
+        wishesFileName = System.getProperty("wishesFileName", "data/wishes.txt");
         logger.info("Got <" + csvFileName + "> as input csvFileName");
         
         // getting giphyApiKey Key
