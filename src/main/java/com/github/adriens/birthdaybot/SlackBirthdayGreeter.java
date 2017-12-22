@@ -10,6 +10,8 @@ import at.mukprojects.giphy4j.entity.search.SearchRandom;
 import at.mukprojects.giphy4j.exception.GiphyException;
 import java.util.ArrayList;
 import java.util.Date;
+
+import com.github.adriens.birthdaybot.utils.BirthdayUtil;
 import net.gpedro.integrations.slack.SlackApi;
 import net.gpedro.integrations.slack.SlackAttachment;
 import net.gpedro.integrations.slack.SlackMessage;
@@ -84,14 +86,7 @@ public class SlackBirthdayGreeter {
         SearchRandom giphyData = giphy.searchRandom(this.BOT_GIPHY_KEYWORDS);
         String gifUrl = giphyData.getData().getImageOriginalUrl();
         SlackApi api = new SlackApi(getSlackWebhookUrl());
-        String msg;
-        if(targetUser == null || targetUser.length() == 0){
-            msg = "Happy birthday @" + targetUser;
-        }
-        else{
-            msg = messageText;
-        }
-        
+        String msg = BirthdayUtil.getMessage(targetUser, messageText);
         String attchTitle;
         if(attachmentTitle == null || attachmentTitle.length() == 0){
             attchTitle = "Time to celebrate a Happy Birthday !";
