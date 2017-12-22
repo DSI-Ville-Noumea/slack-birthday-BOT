@@ -26,7 +26,7 @@ public class MavenExecRunner {
         String csvFileName;
         String giphyApiKey;
         String slackWebHookUrl;
-        
+
         // getting csv filename
         logger.info("Getting csvFilename from property <csvFileName> ...");
         csvFileName = System.getProperty("csvFileName", SlackBirthdayGreeter.CSV_DEFAULT_FILENAME);
