@@ -48,7 +48,7 @@ public class BirthdayUtil {
                 Random random = new Random();
                 int randomInt = random.nextInt(messages.size());
 
-                message = MessageFormat.format(messages.get(randomInt), username);
+                message = MessageFormat.format(messages.get(randomInt), "@" + username);
             }
         }catch (FileNotFoundException e){
             logger.error("Wishes file not found " + WISHES_FILENAME);
