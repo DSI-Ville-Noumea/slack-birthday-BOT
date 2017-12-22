@@ -17,14 +17,17 @@ public class BirthdayUtil {
 
 
     public static String getMessage(String username, String message){
-        String msg;
+
+        String msg = null;
+
         if(Objects.isNull(message) || message.length() == 0){
             msg = getRandomMessage(username);
             if(Objects.isNull(msg) || msg.length() == 0)
                 msg = DEFAULT_MESSAGE + username;
         }
         else{
-            msg = message;
+            if(!message.contains("@" + username))
+                msg = "@" + username + " " + message;
         }
         return msg;
     }
