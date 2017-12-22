@@ -1,6 +1,5 @@
 package com.github.adriens.birthdaybot.utils;
 
-import com.github.adriens.birthdaybot.SlackBirthdayGreeter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +11,7 @@ import java.util.*;
 public class BirthdayUtil {
 
     public final static String DEFAULT_MESSAGE = "Happy Birthday @";
+    public final static String WISHES_FILENAME = "data/wishes.txt";
     private final static Logger logger = LoggerFactory.getLogger(BirthdayUtil.class);
 
 
@@ -20,7 +20,7 @@ public class BirthdayUtil {
         String msg;
         if(Objects.isNull(message) || message.length() == 0){
             msg = getRandomMessage(username);
-            if(Objects.isNull(msg))
+            if(Objects.isNull(msg) || msg.length() == 0)
                 msg = DEFAULT_MESSAGE + username;
         }
         else{
@@ -31,7 +31,7 @@ public class BirthdayUtil {
 
     public static String getRandomMessage(String username){
 
-        File f = new File("test.txt");
+        File f = new File(WISHES_FILENAME);
         String message = null;
 
         try (Scanner fileScanner = new Scanner(f)){
@@ -42,14 +42,17 @@ public class BirthdayUtil {
                 messages.add(fileScanner.nextLine());
             }
 
-            Random random = new Random();
-            int randomInt = random.nextInt(messages.size());
+            if(messages.size() == 0)
+                message = DEFAULT_MESSAGE + username;
+            else {
+                Random random = new Random();
+                int randomInt = random.nextInt(messages.size());
 
-            message =  MessageFormat.format(messages.get(randomInt), username);
-
+                message = MessageFormat.format(messages.get(randomInt), username);
+            }
         }catch (FileNotFoundException e){
-            logger.error("Wishes file not found " + );
-            return DEFAULT_MESSAGE + username;
+            logger.error("Wishes file not found " + WISHES_FILENAME);
+            message = DEFAULT_MESSAGE + username;
         }
         finally {
             return message;
